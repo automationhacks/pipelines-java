@@ -7,11 +7,21 @@ trigger:
   - main
 
 # Different vmImages options are: ubuntu-latest, windows-latest, macos-latest
+strategy:
+  matrix:
+    linux:
+      imageName: "ubuntu-latest"
+    mac:
+      imageName: "macOS-latest"
+    windows:
+      imageName: "windows-latest"
+  maxParallel: 3
+
 pool:
-  vmImage: windows-latest
+  vmImage: $(imageName)
 
 steps:
-  - task: Maven@3
+  - task: Maven@4
     inputs:
       mavenPomFile: "pom.xml"
       mavenOptions: "-Xmx3072m"
